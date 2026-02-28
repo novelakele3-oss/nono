@@ -1,0 +1,395 @@
+/* --- Reset & Core Variables --- */
+:root {
+    --bg-color: #000000;
+    --text-color: #ffffff;
+    --accent-blue: #1a2a6c;
+    --accent-yellow: #fdbb2d;
+    --overlay-bg: rgba(10, 10, 10, 0.95);
+    --font-stack: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-stack);
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+/* --- Background Effects --- */
+.background-blurs {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.blur-blue, .blur-yellow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.5;
+}
+
+.blur-blue {
+    background: var(--accent-blue);
+    width: 60vw; height: 60vw;
+    top: -20%; left: 10%;
+    animation: float 10s infinite alternate ease-in-out;
+}
+
+.blur-yellow {
+    background: var(--accent-yellow);
+    width: 50vw; height: 50vw;
+    top: 10%; right: -10%;
+    animation: float 8s infinite alternate-reverse ease-in-out;
+}
+
+@keyframes float {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(50px, 30px) scale(1.1); }
+}
+
+/* --- Header Navigation --- */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 2rem 5%;
+    position: relative;
+    z-index: 10;
+}
+
+.header-left {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-weight: 600;
+    margin-right: 2rem;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: var(--accent-yellow);
+}
+
+.quote-script {
+    font-family: 'Georgia', serif;
+    font-style: italic;
+    max-width: 300px;
+    font-size: 1.1rem;
+    line-height: 1.4;
+    opacity: 0.9;
+}
+
+.header-right {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.auth-btn {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 5px 10px;
+    transition: opacity 0.3s;
+}
+
+.auth-btn:hover {
+    opacity: 0.7;
+}
+
+/* --- Hero Section --- */
+.hero-section {
+    height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    z-index: 5;
+}
+
+.hero-title {
+    font-size: clamp(2.5rem, 8vw, 6rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -1px;
+    text-transform: uppercase;
+}
+
+/* --- Authentication Overlay (Curved Transition) --- */
+.overlay-container {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: var(--overlay-bg);
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* THE CURVE EFFECT: Start as a tiny circle top right */
+    clip-path: circle(0% at 100% 0%);
+    transition: clip-path 0.8s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.5s;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* When active expansion */
+.overlay-container.active {
+    clip-path: circle(150% at 100% 0%);
+    opacity: 1;
+    pointer-events: all;
+}
+
+.close-btn {
+    position: absolute;
+    top: 2rem; right: 2rem;
+    background: none; border: none;
+    color: white; font-size: 3rem;
+    cursor: pointer;
+    z-index: 101;
+}
+
+.form-wrapper {
+    width: 90%;
+    max-width: 400px;
+    padding: 2rem;
+    background: rgba(255,255,255,0.05);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.auth-form h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.switch-text {
+    margin-bottom: 2rem;
+    font-size: 0.9rem;
+    color: #ccc;
+}
+
+.switch-text a {
+    color: var(--accent-yellow);
+    text-decoration: none;
+}
+
+.input-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 8px;
+    color: white;
+    outline: none;
+}
+
+.input-group input:focus {
+    border-color: var(--accent-yellow);
+}
+
+.primary-btn {
+    width: 100%;
+    padding: 15px;
+    background: var(--accent-blue);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.primary-btn:hover {
+    background: #2a3e8c;
+}
+.secondary-btn {
+    width: 100%;
+    padding: 10px;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 8px;
+    color: #ccc;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: border-color 0.3s;
+}
+.secondary-btn:hover {
+    border-color: var(--accent-yellow);
+}
+
+/* Utility class to hide elements */
+.hidden {
+    display: none !important;
+}
+
+/* --- Post Login Content --- */
+.main-content {
+    padding: 4rem 5%;
+    min-height: 80vh;
+    animation: fadeIn 1s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px);}
+    to { opacity: 1; transform: translateY(0);}
+}
+
+.welcome-back {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    color: var(--accent-yellow);
+}
+
+.content-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding-bottom: 4rem;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.info-card {
+    background: rgba(255,255,255,0.05);
+    padding: 2rem;
+    border-radius: 15px;
+    border: 1px solid rgba(255,255,255,0.1);
+    height: 100%;
+}
+
+.info-card h3 { margin-bottom: 1rem; color: var(--accent-blue); }
+.info-card ul { list-style: none; }
+.info-card li { margin-bottom: 0.5rem; font-size: 1.1rem;}
+
+
+.section-title {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.packages-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-bottom: 3rem;
+}
+
+.package-item {
+    background: rgba(25, 25, 25, 0.8);
+    padding: 1.5rem;
+    text-align: center;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.package-item h3 { color: var(--accent-yellow); margin-top: 10px; }
+
+.package-item.featured {
+    background: var(--accent-blue);
+    transform: scale(1.05);
+    border: none;
+}
+
+.wedding-banner {
+    background: linear-gradient(45deg, var(--accent-blue), #4a00e0);
+    padding: 2rem;
+    text-align: center;
+    border-radius: 15px;
+    margin-bottom: 3rem;
+}
+.wedding-banner h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+.wedding-banner p { font-size: 1.2rem; font-weight: bold; }
+
+.comment-section textarea {
+    width: 100%;
+    height: 100px;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 1rem;
+    color: white;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    resize: vertical;
+    font-family: inherit;
+}
+
+/* --- New Bottom Contact Section --- */
+.contact-section-bottom {
+    margin-top: 4rem;
+    padding: 3rem;
+    background: rgba(255,255,255,0.05);
+    border-radius: 20px;
+    text-align: center;
+    border: 2px solid var(--accent-blue);
+}
+
+.contact-section-bottom h3 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+}
+
+.phone-link-large {
+    display: block;
+    font-size: 2.5rem;
+    color: var(--accent-yellow);
+    text-decoration: none;
+    font-weight: 800;
+    margin-top: 1rem;
+    transition: transform 0.3s;
+}
+.phone-link-large:hover {
+    transform: scale(1.05);
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    header { flex-direction: column; gap: 2rem; align-items: center; }
+    .header-left, .header-right { align-items: center; text-align: center; }
+    .quote-script { margin: 0 auto; }
+    .info-grid { grid-template-columns: 1fr; }
+    .contact-section-bottom { padding: 2rem; }
+    .phone-link-large { font-size: 2rem; }
+}
